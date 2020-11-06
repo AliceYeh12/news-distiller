@@ -1,0 +1,38 @@
+{% extends "layout.html" %} 
+{% block content %}
+
+<div class="results"> 
+    <h2 class="result-header">Search results for: "{{ query }}"</h2>
+    {% if results %}
+        {% for result in results %}
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ result["urlToImage"] }}" class="result-img">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ result["title"].split("-")[0] }}</h3>
+                        {% if (result["author"]) %}
+                            <h5 class="card-subtitle mb-2 text-muted">{{ result["author"] }}, {{ result["source"]["name"] }}</h5>
+                        {% else %}
+                            <h5 class="card-subtitle mb-2 text-muted">{{ result["source"]["name"] }}</h5>
+                        {% endif %}
+                        <p class="card-subtitle mb-2 text-muted">{{ result["publishedAt"].split("T")[0] }}</p>
+                        {% if (result["description"]) %}
+                            <p class="card-text">{{ result["description"] }}</p>
+                        {% endif %}
+                        <a href="{{ result["url"] }}" class="card-link" target="_blank">Read Article</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <h3>&#128478 Sorry, no recent articles found about "{{ query }}"</h3>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
